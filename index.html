@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="新余学院学生综合素质测评成绩实时计算工具">
+  <meta name="theme-color" content="#9b1c1f">
+  <title>新余学院综合素质测评计算器</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand-mark" aria-hidden="true">XYU</div>
+    <div>
+      <p class="eyebrow">2025—2026 学年</p>
+      <h1>新余学院综合素质测评计算器</h1>
+    </div>
+  </header>
+
+  <main class="app-shell">
+    <section class="input-column" aria-label="测评数据填写">
+      <div class="intro-row">
+        <div>
+          <h2>分项测评</h2>
+          <p>填写各项数据，系统将实时计算综测成绩。</p>
+        </div>
+        <button class="text-button" id="exampleButton" type="button">填入示例</button>
+      </div>
+
+      <article class="score-card" data-section="z1">
+        <div class="card-heading">
+          <span class="score-index">Z1</span>
+          <div><h3>德育素质测评</h3><p>基础分 70，奖励分最高 20 分</p></div>
+          <output id="z1Result" class="mini-score">70.00</output>
+        </div>
+        <div class="field-grid three">
+          <label><span>民主评议分 <em>≤ 10</em></span><input id="z1Democracy" type="number" min="0" max="10" step="0.01" value="0" inputmode="decimal"></label>
+          <label><span>奖励分 <em>≤ 20</em></span><input id="z1Reward" type="number" min="0" max="20" step="0.01" value="0" inputmode="decimal"></label>
+          <label><span>处罚分</span><input id="z1Penalty" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+        </div>
+        <p class="formula-hint">70 ＋ 民主评议分 ＋ 奖励分 － 处罚分</p>
+      </article>
+
+      <article class="score-card" data-section="z2">
+        <div class="card-heading">
+          <span class="score-index">Z2</span>
+          <div><h3>智育素质测评</h3><p>平均学分绩取学分加权平均分</p></div>
+          <output id="z2Result" class="mini-score">0.00</output>
+        </div>
+        <div class="field-grid two">
+          <label><span>学分加权平均分 <em>0–100</em></span><input id="weightedAverage" type="number" min="0" max="100" step="0.01" value="0" inputmode="decimal"></label>
+          <label><span>奖罚分</span><input id="z2Bonus" type="number" step="0.01" value="0" inputmode="decimal"><small>奖励填正数，处罚可填负数</small></label>
+        </div>
+        <p class="formula-hint">学分加权平均分 × 80% ＋ 奖罚分 × 20%</p>
+      </article>
+
+      <article class="score-card" data-section="z3">
+        <div class="card-heading">
+          <span class="score-index">Z3</span>
+          <div><h3>体育素质测评</h3><p>暂按最终成绩直接填写</p></div>
+          <output id="z3Result" class="mini-score">0.00</output>
+        </div>
+        <div class="field-grid one">
+          <label><span>最终 Z3 分数 <em>0–100</em></span><input id="z3Score" type="number" min="0" max="100" step="0.01" value="0" inputmode="decimal"></label>
+        </div>
+      </article>
+
+      <article class="score-card" data-section="z4">
+        <div class="card-heading">
+          <span class="score-index">Z4</span>
+          <div><h3>美育素质测评</h3><p>基础分 70，自我激励分固定 10 分</p></div>
+          <output id="z4Result" class="mini-score">80.00</output>
+        </div>
+        <div class="field-grid two">
+          <label><span>奖励分 <em>≤ 20</em></span><input id="z4Reward" type="number" min="0" max="20" step="0.01" value="0" inputmode="decimal"></label>
+          <label><span>处罚分</span><input id="z4Penalty" type="number" min="0" step="0.01" value="0" inputmode="decimal"></label>
+        </div>
+        <p class="formula-hint">70 ＋ 10 ＋ 奖励分 － 处罚分</p>
+      </article>
+
+      <article class="score-card" data-section="z5">
+        <div class="card-heading">
+          <span class="score-index">Z5</span>
+          <div><h3>增值分</h3><p>第二学期绩点减第一学期绩点，最低为 0</p></div>
+          <output id="z5Result" class="mini-score">0.00</output>
+        </div>
+        <div class="field-grid two">
+          <label><span>第一学期平均学分绩点 X1 <em>0–5</em></span><input id="x1" type="number" min="0" max="5" step="0.01" value="0" inputmode="decimal"></label>
+          <label><span>第二学期平均学分绩点 X2 <em>0–5</em></span><input id="x2" type="number" min="0" max="5" step="0.01" value="0" inputmode="decimal"></label>
+        </div>
+        <p class="formula-hint">max（X2 － X1，0）</p>
+      </article>
+    </section>
+
+    <aside class="result-column" aria-label="计算结果">
+      <section class="result-panel">
+        <p class="result-label">综合素质测评成绩</p>
+        <div class="total-row"><output id="totalScore">14.00</output><span>分</span></div>
+        <p class="result-rule">Z1×20% ＋（Z2＋Z5）×60% ＋ Z3×10% ＋ Z4×10%</p>
+        <div class="breakdown" aria-label="分项成绩">
+          <div><span>德育 Z1</span><strong id="summaryZ1">70.00</strong></div>
+          <div><span>智育 Z2</span><strong id="summaryZ2">0.00</strong></div>
+          <div><span>体育 Z3</span><strong id="summaryZ3">0.00</strong></div>
+          <div><span>美育 Z4</span><strong id="summaryZ4">80.00</strong></div>
+          <div><span>增值 Z5</span><strong id="summaryZ5">0.00</strong></div>
+        </div>
+        <div class="calculation-box">
+          <h2>完整计算过程</h2>
+          <ol id="calculationSteps"></ol>
+        </div>
+        <div class="actions">
+          <button class="primary-button" id="saveButton" type="button">保存数据</button>
+          <button class="secondary-button" id="loadButton" type="button">读取数据</button>
+          <button class="secondary-button danger" id="clearButton" type="button">清空数据</button>
+        </div>
+        <p id="statusMessage" class="status-message" role="status" aria-live="polite"></p>
+      </section>
+      <p class="privacy-note">数据仅保存在当前浏览器中，不会上传。</p>
+    </aside>
+  </main>
+
+  <footer>计算结果仅供个人自评参考，最终成绩以学院审核结果为准。</footer>
+  <script src="app.js"></script>
+</body>
+</html>
